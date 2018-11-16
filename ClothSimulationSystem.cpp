@@ -6,3 +6,39 @@
 //-----------------------------------------------------------------------------
 
 #include "ClothSimulationSystem.hpp"
+#include "Vec3.hpp"
+
+ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos)
+{
+    int numParticles = pos.size();
+
+    m_currPos = &pos;
+    
+    m_oldPos = new std::vector<Vec3f>();
+    m_oldPos->resize(numParticles);
+
+    m_forces = new std::vector<Vec3f>();
+    m_forces->resize(numParticles);
+}
+
+void ClothSimulationSystem::AccumulateForces()
+{
+
+}
+
+void ClothSimulationSystem::Verlet(float stepSize) 
+{
+
+}
+
+void ClothSimulationSystem::SatisfyConstraints()
+{
+
+}
+
+void ClothSimulationSystem::TimeStep(float stepSize) 
+{
+    AccumulateForces();
+    Verlet(stepSize);
+    SatisfyConstraints();
+} 
