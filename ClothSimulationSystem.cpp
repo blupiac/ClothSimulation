@@ -12,13 +12,15 @@ ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos)
 {
     int numParticles = pos.size();
 
-    m_currPos = &pos;
+    m_currPos = pos;
     
-    m_oldPos = new std::vector<Vec3f>();
-    m_oldPos->resize(numParticles);
+    m_oldPos.resize(numParticles);
+    m_forces.resize(numParticles);
+}
 
-    m_forces = new std::vector<Vec3f>();
-    m_forces->resize(numParticles);
+std::vector<Vec3f> ClothSimulationSystem::getPos()
+{
+    return m_currPos;
 }
 
 void ClothSimulationSystem::AccumulateForces()

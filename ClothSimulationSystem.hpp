@@ -9,19 +9,28 @@
 
 #include "Vec3.hpp"
 
+struct Constraint {
+    int idxA, idxB;
+    float restlength;
+};
+
 // Sample code for physics simulation
 class ClothSimulationSystem 
 {
 
 public:
 
-    ClothSimulationSystem(std::vector<Vec3f>& pos);
+    ClothSimulationSystem(std::vector<Vec3f>& pos,
+                            std::vector<Constraint>& constraints);
+    std::vector<Vec3f> getPos();
+
 
     void TimeStep(float stepSize);
 
 private:
 
-    std::vector<Vec3f> *m_currPos, *m_oldPos, *m_forces;
+    std::vector<Vec3f> m_currPos, m_oldPos, m_forces;
+    std::vector<Constraint> m_constraints;
 
     void AccumulateForces();
     void Verlet(float stepSize);
