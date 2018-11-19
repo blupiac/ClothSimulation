@@ -25,11 +25,18 @@ public:
 
     ~Vec3() {}
 
-    inline Type& operator[] (int idx) {
-        return (m_vec[idx]);
+    inline const Type& operator[] (int idx) const
+    {
+        return m_vec[idx];
     };
 
-    inline Vec3& operator+ (const Vec3 & p) {
+    inline Type& operator[] (int idx)
+    {
+        return m_vec[idx];
+    };
+
+    inline Vec3 operator+ (const Vec3 & p) const
+    {
         Vec3 res;
         res[0] = m_vec[0] + p[0];
         res[1] = m_vec[1] + p[1];
@@ -37,7 +44,8 @@ public:
         return (res);
     };
 
-    inline Vec3& operator- (const Vec3 & p) {
+    inline Vec3& operator- (const Vec3 & p) const
+    {
         Vec3 res;
         res[0] = m_vec[0] - p[0];
         res[1] = m_vec[1] - p[1];

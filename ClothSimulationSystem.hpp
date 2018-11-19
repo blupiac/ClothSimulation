@@ -24,7 +24,7 @@ public:
                             std::vector<Constraint>& constraints);
     std::vector<Vec3f> getPos();
 
-
+    void ApplyForce(Vec3f forceDirection);
     void TimeStep(float stepSize);
 
 private:

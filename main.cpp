@@ -29,7 +29,18 @@ int main (int argc, char ** argv)
     pos.push_back(Vec3f(0.0f, 3.0f, 0.0f));
     pos.push_back(Vec3f(0.0f, 4.0f, 0.0f));
 
-    ClothSimulationSystem clothSystem = ClothSimulationSystem(pos);
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3, c4;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = 1.0f;
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = 1.0f;
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = 1.0f;
+    c3.idxA = 3; c3.idxB = 4; c3.restlength = 1.0f;
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+
+    ClothSimulationSystem clothSystem = ClothSimulationSystem(pos, constraints);
 
     int maxSteps = 10;
     time_t firstTime;
@@ -37,10 +48,14 @@ int main (int argc, char ** argv)
     time_t lastTime;
     time(&lastTime);
 
+    Vec3f gravity = Vec3f(0.0f, -9.81f, 0.0f);
+
     for(int step = 0; step < maxSteps; step++)
     {
         time_t thisTime;
         time(&thisTime);
+
+        clothSystem.ApplyForce(gravity);
         clothSystem.TimeStep((double) difftime(thisTime,lastTime));
 
         printf("Time: %lf\n", (long double) difftime(thisTime,firstTime));
