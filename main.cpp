@@ -42,27 +42,26 @@ int main (int argc, char ** argv)
 
     ClothSimulationSystem clothSystem = ClothSimulationSystem(pos, constraints);
 
-    int maxSteps = 10;
-    time_t firstTime;
-    time(&firstTime);
-    time_t lastTime;
-    time(&lastTime);
+    int maxSteps = 100;
+    clock_t firstClock, lastClock;
+    lastClock = firstClock = clock();
 
     Vec3f gravity = Vec3f(0.0f, -9.81f, 0.0f);
 
     for(int step = 0; step < maxSteps; step++)
     {
-        time_t thisTime;
-        time(&thisTime);
+        clock_t thisClock = clock();
+        double deltaT = (thisClock - lastClock) / (double) CLOCKS_PER_SEC;
+        double currTime = (thisClock - firstClock) / (double) CLOCKS_PER_SEC;
 
         clothSystem.ApplyForce(gravity);
-        clothSystem.TimeStep((double) difftime(thisTime,lastTime));
+        clothSystem.TimeStep(deltaT);
 
-        printf("Time: %lf\n", (long double) difftime(thisTime,firstTime));
+        printf("Time: %lf, deltaT: %lf\n", currTime, deltaT);
         std::vector<Vec3f> currentPos = clothSystem.getPos();
         printVector(currentPos);
 
-        lastTime = thisTime;
+        lastClock = thisClock;
     }
 
     return 0;

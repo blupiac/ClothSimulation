@@ -35,7 +35,7 @@ public:
         return m_vec[idx];
     };
 
-    inline Vec3 operator+ (const Vec3 & p) const
+    inline const Vec3 operator+ (const Vec3 & p) const
     {
         Vec3 res;
         res[0] = m_vec[0] + p[0];
@@ -44,12 +44,66 @@ public:
         return (res);
     };
 
-    inline Vec3& operator- (const Vec3 & p) const
+    inline const Vec3 operator+ (const Type & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] + p;
+        res[1] = m_vec[1] + p;
+        res[2] = m_vec[2] + p;
+        return (res);
+    };
+
+    inline const Vec3 operator- (const Vec3 & p) const
     {
         Vec3 res;
         res[0] = m_vec[0] - p[0];
         res[1] = m_vec[1] - p[1];
         res[2] = m_vec[2] - p[2];
+        return (res);
+    };
+
+    inline const Vec3 operator- (const Type & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] - p;
+        res[1] = m_vec[1] - p;
+        res[2] = m_vec[2] - p;
+        return (res);
+    };
+
+    inline const Vec3 operator* (const Vec3 & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] * p[0];
+        res[1] = m_vec[1] * p[1];
+        res[2] = m_vec[2] * p[2];
+        return (res);
+    };
+
+    inline const Vec3 operator* (const Type & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] * p;
+        res[1] = m_vec[1] * p;
+        res[2] = m_vec[2] * p;
+        return (res);
+    };
+
+    inline const Vec3 operator/ (const Vec3 & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] / p[0];
+        res[1] = m_vec[1] / p[1];
+        res[2] = m_vec[2] / p[2];
+        return (res);
+    };
+
+    inline const Vec3 operator/ (const Type & p) const
+    {
+        Vec3 res;
+        res[0] = m_vec[0] / p;
+        res[1] = m_vec[1] / p;
+        res[2] = m_vec[2] / p;
         return (res);
     };
 
