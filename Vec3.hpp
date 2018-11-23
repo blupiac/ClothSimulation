@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <iostream>
+
 template <typename Type>
 class Vec3 
 {
@@ -107,11 +109,27 @@ public:
         return (res);
     };
 
+    inline const float dot (const Vec3 & p) const
+    {
+        float res = 0.0f;
+        res += m_vec[0] * p[0];
+        res += m_vec[1] * p[1];
+        res += m_vec[2] * p[2];
+        return (res);
+    };
+
 private:
 
     Type m_vec[3];
 
 };
+
+template <class Type>
+std::ostream & operator<< (std::ostream & output, const Vec3<Type> & v)
+{
+    output << std::fixed << v[0] << " " << v[1] << " " << v[2];
+    return output;
+}
 
 using Vec3f = Vec3<float>;
 using Vec3d = Vec3<double>;

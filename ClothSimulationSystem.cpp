@@ -5,6 +5,9 @@
 // and class notes
 //-----------------------------------------------------------------------------
 
+#include <math.h>
+#include <iostream>
+
 #include "ClothSimulationSystem.hpp"
 #include "Vec3.hpp"
 
@@ -45,7 +48,6 @@ void ClothSimulationSystem::Verlet(float stepSize)
     {
         Vec3f newPos = (m_currPos[i] + m_currPos[i]) - m_oldPos[i] +
             m_forces[i] * (stepSize * stepSize / particleMass);
-        //newPos = newPos + stepSize * stepSize * m_forces[i] / particleMass;
 
         m_oldPos[i] = m_currPos[i];
         m_currPos[i] = newPos;
@@ -54,7 +56,27 @@ void ClothSimulationSystem::Verlet(float stepSize)
 
 void ClothSimulationSystem::SatisfyConstraints()
 {
+    int numIter = 5;
 
+    for(int i = 0; i < numIter; i++)
+    {
+        for(std::vector<Constraint>::iterator it = m_constraints.begin();
+            it != m_constraints.end(); ++it) 
+        {
+            Constraint c = *it;
+            Vec3f pA = m_currPos[c.idxA];
+            Vec3f pB = m_currPos[c.idxB];
+
+            Vec3f delta = pB - pA;
+            float deltaLength = sqrt(delta.dot(delta));
+            float diff = (deltaLength - c.restlength) / deltaLength;
+
+            std::cout << diff << std::endl;
+
+            m_currPos[c.idxA] = pA - (delta * (0.5f * diff));
+            m_currPos[c.idxB] = pB + (delta * (0.5f * diff));
+        }
+    }
 }
 
 void ClothSimulationSystem::ApplyForce(Vec3f forceDirection)

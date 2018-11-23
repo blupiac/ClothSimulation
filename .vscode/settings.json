@@ -43,6 +43,11 @@
         "ratio": "cpp",
         "thread": "cpp",
         "tuple": "cpp",
-        "xfunctional": "cpp"
+        "xfunctional": "cpp",
+        "xthread": "cpp",
+        "*.tcc": "cpp",
+        "iomanip": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }
