@@ -20,7 +20,7 @@ ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
 
     m_currPos = pos;
 
-    m_constraints = m_constraints;
+    m_constraints = constraints;
     
     m_oldPos.resize(numParticles);
     m_forces.resize(numParticles);
@@ -71,10 +71,8 @@ void ClothSimulationSystem::SatisfyConstraints()
             float deltaLength = sqrt(delta.dot(delta));
             float diff = (deltaLength - c.restlength) / deltaLength;
 
-            std::cout << diff << std::endl;
-
-            m_currPos[c.idxA] = pA - (delta * (0.5f * diff));
-            m_currPos[c.idxB] = pB + (delta * (0.5f * diff));
+            m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
+            m_currPos[c.idxB] = pB - (delta * (0.5f * diff));
         }
     }
 }
