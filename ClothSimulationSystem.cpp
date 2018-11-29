@@ -39,7 +39,10 @@ std::vector<Vec3f> ClothSimulationSystem::getPos()
 
 void ClothSimulationSystem::AccumulateForces()
 {
-
+    for(int i = 0; i < m_currPos.size(); i++)
+    {
+        m_currPos[i] = m_currPos[i] + m_forces[i];
+    }
 }
 
 void ClothSimulationSystem::Verlet(float stepSize) 
@@ -60,6 +63,7 @@ void ClothSimulationSystem::SatisfyConstraints()
 
     for(int i = 0; i < numIter; i++)
     {
+        // makes sure constraints specified during creation are respected
         for(std::vector<Constraint>::iterator it = m_constraints.begin();
             it != m_constraints.end(); ++it) 
         {
@@ -73,6 +77,12 @@ void ClothSimulationSystem::SatisfyConstraints()
 
             m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
             m_currPos[c.idxB] = pB - (delta * (0.5f * diff));
+        }
+
+        // makes sure y coordinate can't be negative
+        for(int i = 0; i < m_currPos.size(); i++)
+        {
+            m_currPos[i][1] = std::max(0.0f, m_currPos[i][1]);
         }
     }
 }
