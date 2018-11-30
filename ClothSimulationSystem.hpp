@@ -20,9 +20,12 @@ class ClothSimulationSystem
 
 public:
 
+    ClothSimulationSystem();
+    
     ClothSimulationSystem(std::vector<Vec3f>& pos,
                             std::vector<Constraint>& constraints);
     std::vector<Vec3f> getPos();
+    std::vector<Constraint> getConstraints();
 
     void ApplyForce(Vec3f forceDirection);
     void TimeStep(float stepSize);

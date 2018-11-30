@@ -12,17 +12,36 @@
 
 //#define CLOCK_TIME
 
+
+static const unsigned int DEFAULT_SCREENWIDTH = 1024;
+static const unsigned int DEFAULT_SCREENHEIGHT = 768;
+
+static ClothSimulationSystem clothSystem;
+
 void display() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
     glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer
  
-    // Draw a Red 1x1 Square centered at origin
-    glBegin(GL_QUADS);              // Each set of 4 vertices form a quad
-        glColor3f(1.0f, 0.0f, 0.0f); // Red
-        glVertex2f(-0.5f, -0.5f);    // x, y
-        glVertex2f( 0.5f, -0.5f);
-        glVertex2f( 0.5f,  0.5f);
-        glVertex2f(-0.5f,  0.5f);
+    glLineWidth(2.5);
+    glColor3f(1.0, 0.0, 0.0);
+    
+    std::vector<Vec3f> pos = clothSystem.getPos();
+    std::vector<Constraint> constraints = clothSystem.getConstraints();
+
+    glBegin(GL_LINES);
+        
+        // each constraint = one line
+        for(std::vector<Constraint>::iterator it = constraints.begin();
+            it != constraints.end(); ++it) 
+        {
+            Constraint c = *it;
+            Vec3f pA = pos[c.idxA];
+            Vec3f pB = pos[c.idxB];
+
+            glVertex3f(pA[0], pA[1], pA[2]);
+            glVertex3f(pB[0], pB[1], pB[2]);
+        }
+
     glEnd();
  
     glFlush();  // Render now
@@ -57,7 +76,7 @@ int main (int argc, char ** argv)
     constraints.push_back(c2);
     constraints.push_back(c3);
 
-    ClothSimulationSystem clothSystem = ClothSimulationSystem(pos, constraints);
+    clothSystem = ClothSimulationSystem(pos, constraints);
 
     int maxSteps = 100;
 #ifdef CLOCK_TIME
@@ -93,9 +112,9 @@ int main (int argc, char ** argv)
     }
 
     glutInit(&argc, argv);                 // Initialize GLUT
-    glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
-    glutInitWindowSize(320, 320);   // Set the window's initial width & height
+    glutInitWindowSize(DEFAULT_SCREENWIDTH, DEFAULT_SCREENHEIGHT);   // Set the window's initial width & height
     glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
+    glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
     glutDisplayFunc(display); // Register display callback handler for window re-paint
     glutMainLoop();           // Enter the infinitely event-processing loop
     return 0;

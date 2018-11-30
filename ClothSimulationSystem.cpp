@@ -13,6 +13,11 @@
 
 static const float particleMass = 1.0f;
 
+ClothSimulationSystem::ClothSimulationSystem()
+{
+
+}
+
 ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
                             std::vector<Constraint>& constraints)
 {
@@ -35,6 +40,11 @@ ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
 std::vector<Vec3f> ClothSimulationSystem::getPos()
 {
     return m_currPos;
+}
+
+std::vector<Constraint> ClothSimulationSystem::getConstraints()
+{
+    return m_constraints;
 }
 
 void ClothSimulationSystem::AccumulateForces()
