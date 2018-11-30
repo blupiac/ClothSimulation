@@ -35,7 +35,7 @@ private:
     std::vector<Vec3f> m_currPos, m_oldPos, m_forces;
     std::vector<Constraint> m_constraints;
 
-    void AccumulateForces();
+    void AccumulateForces(float stepSize);
     void Verlet(float stepSize);
     void SatisfyConstraints();
 };

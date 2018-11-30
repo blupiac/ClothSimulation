@@ -10,6 +10,7 @@
 
 #include "ClothSimulationSystem.hpp"
 #include "Vec3.hpp"
+#include "Camera.hpp"
 
 static const float particleMass = 1.0f;
 
@@ -47,11 +48,12 @@ std::vector<Constraint> ClothSimulationSystem::getConstraints()
     return m_constraints;
 }
 
-void ClothSimulationSystem::AccumulateForces()
+void ClothSimulationSystem::AccumulateForces(float stepSize)
 {
     for(int i = 0; i < m_currPos.size(); i++)
     {
-        m_currPos[i] = m_currPos[i] + m_forces[i];
+        m_currPos[i] = m_currPos[i] + m_forces[i] * stepSize;
+        m_forces[i] = Vec3f(0.0f, 0.0f, 0.0f); // force has been applied
     }
 }
 
@@ -82,7 +84,7 @@ void ClothSimulationSystem::SatisfyConstraints()
             Vec3f pB = m_currPos[c.idxB];
 
             Vec3f delta = pB - pA;
-            float deltaLength = sqrt(delta.dot(delta));
+            float deltaLength = sqrt(dot(delta, delta));
             float diff = (deltaLength - c.restlength) / deltaLength;
 
             m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
@@ -107,7 +109,7 @@ void ClothSimulationSystem::ApplyForce(Vec3f forceDirection)
 
 void ClothSimulationSystem::TimeStep(float stepSize) 
 {
-    AccumulateForces();
+    AccumulateForces(stepSize);
     Verlet(stepSize);
     SatisfyConstraints();
 } 
