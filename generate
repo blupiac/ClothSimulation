@@ -1,0 +1,1 @@
+g++ main.cpp ClothSimulationSystem.cpp Camera.cpp -lm -lglut -lGLU -lGL -o clothSimulation
