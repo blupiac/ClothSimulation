@@ -144,10 +144,125 @@ void loadStringExample()
 
     std::vector<Constraint> constraints;
     Constraint c0, c1, c2, c3;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = sqrt(3.0f);
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = sqrt(3.0f);
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = sqrt(3.0f);
+    c3.idxA = 3; c3.idxB = 4; c3.restlength = sqrt(3.0f);
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+
+    std::vector<bool> isMovable;
+    isMovable.resize(5);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = true;
+    isMovable[4] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
+}
+
+void loadCompressedStringExample()
+{
+    std::vector<Vec3f> pos;
+    pos.push_back(Vec3f(0.0f, 0.0f, 0.0f));
+    pos.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+    pos.push_back(Vec3f(3.0f, 3.0f, 3.0f));
+    pos.push_back(Vec3f(4.0f, 4.0f, 4.0f));
+
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3;
     c0.idxA = 0; c0.idxB = 1; c0.restlength = 3.0f;
     c1.idxA = 1; c1.idxB = 2; c1.restlength = 3.0f;
     c2.idxA = 2; c2.idxB = 3; c2.restlength = 3.0f;
     c3.idxA = 3; c3.idxB = 4; c3.restlength = 3.0f;
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+
+    std::vector<bool> isMovable;
+    isMovable.resize(5);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = true;
+    isMovable[4] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
+}
+
+void loadCubeExample()
+{
+    std::vector<Vec3f> pos;
+    pos.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 2.0f));
+
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = 1.0f;
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = 1.0f;
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = 1.0f;
+    c3.idxA = 3; c3.idxB = 0; c3.restlength = 1.0f;
+    c4.idxA = 0; c4.idxB = 4; c4.restlength = 1.0f;
+    c5.idxA = 1; c5.idxB = 5; c5.restlength = 1.0f;
+    c6.idxA = 2; c6.idxB = 6; c6.restlength = 1.0f;
+    c7.idxA = 3; c7.idxB = 7; c7.restlength = 1.0f;
+    c8.idxA = 4; c8.idxB = 5; c8.restlength = 1.0f;
+    c9.idxA = 5; c9.idxB = 6; c9.restlength = 1.0f;
+    c10.idxA = 6; c10.idxB = 7; c10.restlength = 1.0f;
+    c11.idxA = 7; c11.idxB = 4; c11.restlength = 1.0f;
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+    constraints.push_back(c4);
+    constraints.push_back(c5);
+    constraints.push_back(c6);
+    constraints.push_back(c7);
+    constraints.push_back(c8);
+    constraints.push_back(c9);
+    constraints.push_back(c10);
+    constraints.push_back(c11);
+
+    std::vector<bool> isMovable;
+    isMovable.resize(8);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = true;
+    isMovable[4] = true;
+    isMovable[5] = true;
+    isMovable[6] = true;
+    isMovable[7] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
+}
+
+void loadFixedStringExample()
+{
+    std::vector<Vec3f> pos;
+    pos.push_back(Vec3f(0.0f, 3.0f, 0.0f));
+    pos.push_back(Vec3f(1.0f, 4.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 5.0f, 2.0f));
+    pos.push_back(Vec3f(3.0f, 6.0f, 3.0f));
+    pos.push_back(Vec3f(4.0f, 7.0f, 4.0f));
+
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = sqrt(3.0f);
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = sqrt(3.0f);
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = sqrt(3.0f);
+    c3.idxA = 3; c3.idxB = 4; c3.restlength = sqrt(3.0f);
     constraints.push_back(c0);
     constraints.push_back(c1);
     constraints.push_back(c2);
@@ -164,7 +279,7 @@ void loadStringExample()
     clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
 }
 
-void loadCubeExample()
+void loadFixedCubeExample()
 {
     std::vector<Vec3f> pos;
     pos.push_back(Vec3f(1.0f, 1.0f, 1.0f));
@@ -217,11 +332,168 @@ void loadCubeExample()
     clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
 }
 
+void loadFixedStrongCubeExample()
+{
+    std::vector<Vec3f> pos;
+    pos.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 2.0f));
+
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = 1.0f;
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = 1.0f;
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = 1.0f;
+    c3.idxA = 3; c3.idxB = 0; c3.restlength = 1.0f;
+    c4.idxA = 0; c4.idxB = 4; c4.restlength = 1.0f;
+    c5.idxA = 1; c5.idxB = 5; c5.restlength = 1.0f;
+    c6.idxA = 2; c6.idxB = 6; c6.restlength = 1.0f;
+    c7.idxA = 3; c7.idxB = 7; c7.restlength = 1.0f;
+    c8.idxA = 4; c8.idxB = 5; c8.restlength = 1.0f;
+    c9.idxA = 5; c9.idxB = 6; c9.restlength = 1.0f;
+    c10.idxA = 6; c10.idxB = 7; c10.restlength = 1.0f;
+    c11.idxA = 7; c11.idxB = 4; c11.restlength = 1.0f;
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+    constraints.push_back(c4);
+    constraints.push_back(c5);
+    constraints.push_back(c6);
+    constraints.push_back(c7);
+    constraints.push_back(c8);
+    constraints.push_back(c9);
+    constraints.push_back(c10);
+    constraints.push_back(c11);
+
+    // diagonal constraints
+    Constraint d0, d1, d2, d3;
+    d0.idxA = 0; d0.idxB = 6; d0.restlength = sqrt(3.0f);
+    d1.idxA = 1; d1.idxB = 7; d1.restlength = sqrt(3.0f);
+    d2.idxA = 2; d2.idxB = 4; d2.restlength = sqrt(3.0f);
+    d3.idxA = 3; d3.idxB = 5; d3.restlength = sqrt(3.0f);
+    constraints.push_back(d0);
+    constraints.push_back(d1);
+    constraints.push_back(d2);
+    constraints.push_back(d3);
+
+    std::vector<bool> isMovable;
+    isMovable.resize(8);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = false;
+    isMovable[4] = true;
+    isMovable[5] = true;
+    isMovable[6] = true;
+    isMovable[7] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
+}
+
+void loadFixedExtraStrongCubeExample()
+{
+    std::vector<Vec3f> pos;
+    pos.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 1.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 1.0f));
+    pos.push_back(Vec3f(1.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 1.0f, 2.0f));
+    pos.push_back(Vec3f(2.0f, 2.0f, 2.0f));
+    pos.push_back(Vec3f(1.0f, 2.0f, 2.0f));
+
+    std::vector<Constraint> constraints;
+    Constraint c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11;
+    c0.idxA = 0; c0.idxB = 1; c0.restlength = 1.0f;
+    c1.idxA = 1; c1.idxB = 2; c1.restlength = 1.0f;
+    c2.idxA = 2; c2.idxB = 3; c2.restlength = 1.0f;
+    c3.idxA = 3; c3.idxB = 0; c3.restlength = 1.0f;
+    c4.idxA = 0; c4.idxB = 4; c4.restlength = 1.0f;
+    c5.idxA = 1; c5.idxB = 5; c5.restlength = 1.0f;
+    c6.idxA = 2; c6.idxB = 6; c6.restlength = 1.0f;
+    c7.idxA = 3; c7.idxB = 7; c7.restlength = 1.0f;
+    c8.idxA = 4; c8.idxB = 5; c8.restlength = 1.0f;
+    c9.idxA = 5; c9.idxB = 6; c9.restlength = 1.0f;
+    c10.idxA = 6; c10.idxB = 7; c10.restlength = 1.0f;
+    c11.idxA = 7; c11.idxB = 4; c11.restlength = 1.0f;
+    constraints.push_back(c0);
+    constraints.push_back(c1);
+    constraints.push_back(c2);
+    constraints.push_back(c3);
+    constraints.push_back(c4);
+    constraints.push_back(c5);
+    constraints.push_back(c6);
+    constraints.push_back(c7);
+    constraints.push_back(c8);
+    constraints.push_back(c9);
+    constraints.push_back(c10);
+    constraints.push_back(c11);
+
+    // diagonal constraints
+    Constraint d0, d1, d2, d3;
+    d0.idxA = 0; d0.idxB = 6; d0.restlength = sqrt(3.0f);
+    d1.idxA = 1; d1.idxB = 7; d1.restlength = sqrt(3.0f);
+    d2.idxA = 2; d2.idxB = 4; d2.restlength = sqrt(3.0f);
+    d3.idxA = 3; d3.idxB = 5; d3.restlength = sqrt(3.0f);
+    constraints.push_back(d0);
+    constraints.push_back(d1);
+    constraints.push_back(d2);
+    constraints.push_back(d3);
+
+    // side diagonal constraints
+    Constraint s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11;
+    s0.idxA = 0; s0.idxB = 2; s0.restlength = sqrt(2.0f);
+    s1.idxA = 1; s1.idxB = 3; s1.restlength = sqrt(2.0f);
+    s2.idxA = 1; s2.idxB = 6; s2.restlength = sqrt(2.0f);
+    s3.idxA = 5; s3.idxB = 2; s3.restlength = sqrt(2.0f);
+    s4.idxA = 5; s4.idxB = 7; s4.restlength = sqrt(2.0f);
+    s5.idxA = 4; s5.idxB = 6; s5.restlength = sqrt(2.0f);
+    s6.idxA = 4; s6.idxB = 3; s6.restlength = sqrt(2.0f);
+    s7.idxA = 0; s7.idxB = 7; s7.restlength = sqrt(2.0f);
+    s8.idxA = 0; s8.idxB = 5; s8.restlength = sqrt(2.0f);
+    s9.idxA = 1; s9.idxB = 4; s9.restlength = sqrt(2.0f);
+    s10.idxA = 2; s10.idxB = 7; s10.restlength = sqrt(2.0f);
+    s11.idxA = 3; s11.idxB = 6; s11.restlength = sqrt(2.0f);
+    constraints.push_back(s0);
+    constraints.push_back(s1);
+    constraints.push_back(s2);
+    constraints.push_back(s3);
+    constraints.push_back(s4);
+    constraints.push_back(s5);
+    constraints.push_back(s6);
+    constraints.push_back(s7);
+    constraints.push_back(s8);
+    constraints.push_back(s9);
+    constraints.push_back(s10);
+    constraints.push_back(s11);
+
+    std::vector<bool> isMovable;
+    isMovable.resize(8);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = false;
+    isMovable[4] = true;
+    isMovable[5] = true;
+    isMovable[6] = true;
+    isMovable[7] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
+}
+
+
+
 void printUsage()
 {
-    std::cout << "============================================================" << std::endl;
-    std::cout << "===================== CLOTH SIMULATION =====================" << std::endl;
-    std::cout << "============================================================" << std::endl << std::endl;
+    std::cout << "==================================================================" << std::endl;
+    std::cout << "======================== CLOTH SIMULATION ========================" << std::endl;
+    std::cout << "==================================================================" << std::endl << std::endl;
 
     std::cout << "Project made by Bernard Lupiac in nov-dec 2018, for the INF1608 project." << std::endl << std::endl;
 
@@ -230,14 +502,21 @@ void printUsage()
     std::cout << "Mousewheel click + drag, or scrolling to zoom in and out." << std::endl << std::endl;
 
     std::cout << "Press 'S' to make a timestep in the simulation." << std::endl;
+    std::cout << "(tip: keeping 'S' pressed makes the system advance in a quasi-realistic speed)" << std::endl;
     std::cout << "Press 'A' to toggle automatic timestep." << std::endl;
     std::cout << "Press 'R' to reset the camera position and rotation." << std::endl;
     std::cout << "Press 'W' to toggle wind force on the simulation." << std::endl << std::endl;
     
     std::cout << "Press '1' to load the string example." << std::endl;
-    std::cout << "Press '2' to load the cube example." << std::endl << std::endl;
+    std::cout << "Press '2' to load the cube example." << std::endl;
+    std::cout << "Press '3' to load the fixed string example." << std::endl;
+    std::cout << "Press '4' to load the fixed cube example." << std::endl;
+    std::cout << "Press '5' to load the strong fixed cube example." << std::endl;
+    std::cout << "Press '6' to load the extra strong fixed cube example." << std::endl;
 
-    std::cout << "Press 'Q' or 'Esc' to quit the application." << std::endl;
+    std::cout << "Press '0' to load the compressed string example." << std::endl << std::endl;
+
+    std::cout << "Press 'Q' or 'Esc' to quit the application." << std::endl << std::endl;
 }
 
 void keyboardEventListener (unsigned char keyPressed, int x, int y) 
@@ -289,6 +568,31 @@ void keyboardEventListener (unsigned char keyPressed, int x, int y)
         case '2':
             std::cout << "Loading cube example." << std::endl;
             loadCubeExample();
+            display();
+            break;
+        case '3':
+            std::cout << "Loading fixed string example." << std::endl;
+            loadFixedStringExample();
+            display();
+            break;
+        case '4':
+            std::cout << "Loading fixed cube example." << std::endl;
+            loadFixedCubeExample();
+            display();
+            break;
+        case '5':
+            std::cout << "Loading fixed strong cube example." << std::endl;
+            loadFixedStrongCubeExample();
+            display();
+            break;
+        case '6':
+            std::cout << "Loading fixed extra strong cube example." << std::endl;
+            loadFixedExtraStrongCubeExample();
+            display();
+            break;
+        case '0':
+            std::cout << "Loading compressed string example." << std::endl;
+            loadCompressedStringExample();
             display();
             break;
         default:
