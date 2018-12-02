@@ -153,7 +153,15 @@ void loadStringExample()
     constraints.push_back(c2);
     constraints.push_back(c3);
 
-    clothSystem = ClothSimulationSystem(pos, constraints);
+    std::vector<bool> isMovable;
+    isMovable.resize(5);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = true;
+    isMovable[4] = false;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
 }
 
 void loadCubeExample()
@@ -195,7 +203,18 @@ void loadCubeExample()
     constraints.push_back(c10);
     constraints.push_back(c11);
 
-    clothSystem = ClothSimulationSystem(pos, constraints);
+    std::vector<bool> isMovable;
+    isMovable.resize(8);
+    isMovable[0] = true;
+    isMovable[1] = true;
+    isMovable[2] = true;
+    isMovable[3] = false;
+    isMovable[4] = true;
+    isMovable[5] = true;
+    isMovable[6] = true;
+    isMovable[7] = true;
+
+    clothSystem = ClothSimulationSystem(pos, constraints, isMovable);
 }
 
 void printUsage()

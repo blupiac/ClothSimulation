@@ -20,13 +20,14 @@ ClothSimulationSystem::ClothSimulationSystem()
 }
 
 ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
-                            std::vector<Constraint>& constraints)
+                            std::vector<Constraint>& constraints,
+                            std::vector<bool> isMovable)
 {
     int numParticles = pos.size();
 
     m_currPos = pos;
-
     m_constraints = constraints;
+    m_isMovable = isMovable;
     
     m_oldPos.resize(numParticles);
     m_forces.resize(numParticles);
@@ -52,8 +53,11 @@ void ClothSimulationSystem::AccumulateForces(float stepSize)
 {
     for(int i = 0; i < m_currPos.size(); i++)
     {
-        m_currPos[i] = m_currPos[i] + m_forces[i] * stepSize;
-        m_forces[i] = Vec3f(0.0f, 0.0f, 0.0f); // force has been applied
+    	if(m_isMovable[i])
+    	{
+	        m_currPos[i] = m_currPos[i] + m_forces[i] * stepSize;
+	        m_forces[i] = Vec3f(0.0f, 0.0f, 0.0f); // force has been applied
+	    }
     }
 }
 
@@ -61,11 +65,14 @@ void ClothSimulationSystem::Verlet(float stepSize)
 {
     for(int i = 0; i < m_currPos.size(); i++)
     {
-        Vec3f newPos = (m_currPos[i] + m_currPos[i]) - m_oldPos[i] +
-            m_forces[i] * (stepSize * stepSize / particleMass);
+    	if(m_isMovable[i])
+    	{
+    		Vec3f newPos = (m_currPos[i] + m_currPos[i]) - m_oldPos[i] +
+	            m_forces[i] * (stepSize * stepSize / particleMass);
 
-        m_oldPos[i] = m_currPos[i];
-        m_currPos[i] = newPos;
+	        m_oldPos[i] = m_currPos[i];
+	        m_currPos[i] = newPos;
+    	}
     }
 }
 
@@ -87,8 +94,20 @@ void ClothSimulationSystem::SatisfyConstraints()
             float deltaLength = sqrt(delta.dot(delta));
             float diff = (deltaLength - c.restlength) / deltaLength;
 
-            m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
-            m_currPos[c.idxB] = pB - (delta * (0.5f * diff));
+            if(m_isMovable[c.idxA] && m_isMovable[c.idxB])
+    		{
+	            m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
+	            m_currPos[c.idxB] = pB - (delta * (0.5f * diff));
+	        }
+	        else if(m_isMovable[c.idxA] && !m_isMovable[c.idxB])
+	        {
+	        	m_currPos[c.idxA] = pA + (delta * diff);
+	        }
+	        else if(!m_isMovable[c.idxA] && m_isMovable[c.idxB])
+	        {
+	        	m_currPos[c.idxB] = pB - (delta * diff);
+	        }
+	        // else: none of them can move, tough luck
         }
 
         // makes sure y coordinate can't be negative

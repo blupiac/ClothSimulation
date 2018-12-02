@@ -23,7 +23,8 @@ public:
     ClothSimulationSystem();
     
     ClothSimulationSystem(std::vector<Vec3f>& pos,
-                            std::vector<Constraint>& constraints);
+                            std::vector<Constraint>& constraints,
+                            std::vector<bool> isMovable);
     std::vector<Vec3f> getPos();
     std::vector<Constraint> getConstraints();
 
@@ -34,6 +35,7 @@ private:
 
     std::vector<Vec3f> m_currPos, m_oldPos, m_forces;
     std::vector<Constraint> m_constraints;
+    std::vector<bool> m_isMovable;
 
     void AccumulateForces(float stepSize);
     void Verlet(float stepSize);
