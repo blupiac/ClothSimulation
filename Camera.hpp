@@ -22,8 +22,6 @@ public:
     // Connecting typical GLUT events
     void handleMouseClickEvent (int button, int state, int x, int y);
     void handleMouseMoveEvent (int x, int y);
-    void zoomIn();
-    void zoomOut();
   
 private:
     bool rotating, moving, zooming;
