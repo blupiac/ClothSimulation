@@ -27,5 +27,5 @@ private:
     bool rotating, moving, zooming;
     float yaw, pitch, lastX, lastY, lastZoom, fov;
 
-    Vec3f cameraPos, cameraFront, cameraUp;
+    Vec3f cameraPos, cameraFront, cameraUp, cameraRight, worldUp;
 };

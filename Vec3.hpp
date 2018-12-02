@@ -132,13 +132,23 @@ public:
     {
         Vec3 res;
         float magnitude = std::sqrt(m_vec[0] * m_vec[0] +
-                                    m_vec[1] * m_vec[0] + 
+                                    m_vec[1] * m_vec[1] + 
                                     m_vec[2] * m_vec[2]);
 
-        res[0] = m_vec[0] / magnitude;
-        res[1] = m_vec[1] / magnitude;
-        res[2] = m_vec[2] / magnitude;
-        return (res);
+        if(magnitude != 0.0f)
+        {
+            res[0] = m_vec[0] / magnitude;
+            res[1] = m_vec[1] / magnitude;
+            res[2] = m_vec[2] / magnitude;
+            return (res);
+        }
+        else
+        {
+            res[0] = m_vec[0];
+            res[1] = m_vec[1];
+            res[2] = m_vec[2];
+            return (res);
+        }
     };
 
 private:

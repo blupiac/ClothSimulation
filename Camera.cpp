@@ -14,7 +14,7 @@
 #include "Camera.hpp"
 
 const float ROTATE_SENSITIVITY = 0.1f;
-const float MOVE_SPEED = 0.01f;
+const float MOVE_SPEED = 0.005f;
 const float ZOOM_SPEED = 0.01f;
 
 const float NEAR = 0.01f;
@@ -34,6 +34,8 @@ Camera::Camera ()
     cameraPos[0] = 2.0f; cameraPos[1] = 2.0f; cameraPos[2] = 10.0f;
     cameraFront[0] = 0.0f; cameraFront[1] = 0.0f; cameraFront[2] = -1.0f;
     cameraUp[0] = 0.0f; cameraUp[1] = 1.0f; cameraUp[2] = 0.0f;
+    cameraRight[0] = 1.0f; cameraRight[1] = 0.0f; cameraRight[2] = 0.0f;
+    worldUp[0] = 0.0f; worldUp[1] = 1.0f; worldUp[2] = 0.0f;
 }
 
 Vec3f Camera::getPos ()
@@ -139,20 +141,11 @@ void Camera::handleMouseMoveEvent(int x, int y)
         float xOffset = x - lastX;
         float yOffset = lastY - y;
 
-        Vec3f cameraRight = cameraFront.cross(cameraUp);
-        Vec3f cameraNewUp = cameraFront.cross(cameraRight);
+        cameraRight = cameraFront.cross(cameraUp).normalize();
+        cameraUp = cameraRight.cross(cameraFront).normalize();
 
-        std::cout << "up: " << cameraNewUp << std::endl;
-        std::cout << "right: " << cameraRight << std::endl << std::endl;
-
-        if(xOffset != 0.0f)
-        {
-            cameraPos = cameraPos + cameraRight.normalize() * (MOVE_SPEED * yOffset);    
-        }
-        if(yOffset != 0.0f)
-        {
-            cameraPos = cameraPos + cameraNewUp.normalize() * (MOVE_SPEED * xOffset);
-        }
+        cameraPos = cameraPos - cameraRight * (MOVE_SPEED * xOffset);    
+        cameraPos = cameraPos - cameraUp * (MOVE_SPEED * yOffset);
 
         lastX = x;
         lastY = y;

@@ -37,11 +37,11 @@ void renderScene()
         glColor3d(0.46f,0.77f,0.68f);
         glVertex3f(-10.0f, 0.0f,-10.0f);
         glColor3d(0.46f,0.77f,0.68f);
-        glVertex3f(10.0f, 0.0f,-10.0f);
+        glVertex3f(-10.0f, 0.0f,10.0f);
         glColor3d(0.46f,0.77f,0.68f);
         glVertex3f(10.0f, 0.0f,10.0f);
         glColor3d(0.46f,0.77f,0.68f);
-        glVertex3f(-10.0f, 0.0f,10.0f);
+        glVertex3f(10.0f, 0.0f,-10.0f);
     glEnd();
 
     glBegin(GL_LINES);
@@ -165,6 +165,7 @@ int main (int argc, char ** argv)
     glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
     glClearColor(0.83f, 0.82f, 0.71, 1.0);
     glLineWidth(5);
+    glEnable(GL_CULL_FACE);
     
     camera.resize (DEFAULT_SCREENWIDTH, DEFAULT_SCREENHEIGHT);
 
