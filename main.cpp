@@ -48,7 +48,15 @@ void reshapeEventListener(int w, int h)
 void display () 
 {
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    camera.apply (); 
+    
+    Vec3f camPos = camera.getPos();
+    Vec3f camFront = camera.getFront();
+    Vec3f camUp = camera.getUp();
+
+    gluLookAt(camPos[0],  camPos[1],  camPos[2],
+                camPos[0] + camFront[0],  camPos[1] + camFront[1],  camPos[2] + camFront[2],
+                camUp[0],  camUp[1],  camUp[2]);
+
     renderScene ();
     glFlush ();
     glutSwapBuffers (); 
@@ -57,11 +65,13 @@ void display ()
 void mouseEventListener (int button, int state, int x, int y) 
 {
     camera.handleMouseClickEvent (button, state, x, y);
+    display();
 }
 
 void motionEventListener (int x, int y) 
 {
     camera.handleMouseMoveEvent (x, y);
+    display();
 }
 
 void printVector(std::vector<Vec3f> vec)
@@ -95,6 +105,9 @@ void keyboardEventListener (unsigned char keyPressed, int x, int y)
             break;
         case 's':
             step();
+            break;
+        case 'r':
+            camera = Camera();
             break;
         default:
             break;

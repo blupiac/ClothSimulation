@@ -84,7 +84,7 @@ void ClothSimulationSystem::SatisfyConstraints()
             Vec3f pB = m_currPos[c.idxB];
 
             Vec3f delta = pB - pA;
-            float deltaLength = sqrt(dot(delta, delta));
+            float deltaLength = sqrt(delta.dot(delta));
             float diff = (deltaLength - c.restlength) / deltaLength;
 
             m_currPos[c.idxA] = pA + (delta * (0.5f * diff));
