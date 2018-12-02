@@ -14,11 +14,11 @@
 #include "Camera.hpp"
 
 const float ROTATE_SENSITIVITY = 0.1f;
-const float MOVE_SPEED = 2.5f;
-const float ZOOM_SPEED = 2.5f;
+const float MOVE_SPEED = 0.01f;
+const float ZOOM_SPEED = 0.01f;
 
 const float NEAR = 0.01f;
-const float FAR = 10.0f;
+const float FAR = 50.0f;
 
 Camera::Camera () 
 {
@@ -31,7 +31,7 @@ Camera::Camera ()
     lastZoom = 0.0f;
     fov   =  45.0f;
 
-    cameraPos[0] = 0.0f; cameraPos[1] = 0.0f; cameraPos[2] = 3.0f;
+    cameraPos[0] = 2.0f; cameraPos[1] = 2.0f; cameraPos[2] = 10.0f;
     cameraFront[0] = 0.0f; cameraFront[1] = 0.0f; cameraFront[2] = -1.0f;
     cameraUp[0] = 0.0f; cameraUp[1] = 1.0f; cameraUp[2] = 0.0f;
 }
@@ -112,8 +112,6 @@ void Camera::handleMouseMoveEvent(int x, int y)
     {
         float xOffset = x - lastX;
         float yOffset = lastY - y; // reversed since y-coordinates go from bottom to top
-        lastX = x;
-        lastY = y;
 
         xOffset *= ROTATE_SENSITIVITY;
         yOffset *= ROTATE_SENSITIVITY;
@@ -132,17 +130,29 @@ void Camera::handleMouseMoveEvent(int x, int y)
         front[1] = sin(toRadians(pitch));
         front[2] = sin(toRadians(yaw)) * cos(toRadians(pitch));
         cameraFront = front.normalize();
+
+        lastX = x;
+        lastY = y;
     } 
     else if (moving) 
     {
         float xOffset = x - lastX;
         float yOffset = lastY - y;
 
-        Vec3f cameraNewUp = cameraFront.cross(cameraUp).normalize();
-        Vec3f cameraRight = cameraFront.cross(cameraNewUp).normalize();
+        Vec3f cameraRight = cameraFront.cross(cameraUp);
+        Vec3f cameraNewUp = cameraFront.cross(cameraRight);
 
-        cameraPos = cameraPos + cameraNewUp * (MOVE_SPEED * yOffset);
-        cameraPos = cameraPos + cameraRight * (MOVE_SPEED * xOffset);
+        std::cout << "up: " << cameraNewUp << std::endl;
+        std::cout << "right: " << cameraRight << std::endl << std::endl;
+
+        if(xOffset != 0.0f)
+        {
+            cameraPos = cameraPos + cameraRight.normalize() * (MOVE_SPEED * yOffset);    
+        }
+        if(yOffset != 0.0f)
+        {
+            cameraPos = cameraPos + cameraNewUp.normalize() * (MOVE_SPEED * xOffset);
+        }
 
         lastX = x;
         lastY = y;

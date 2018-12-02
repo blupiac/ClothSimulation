@@ -18,10 +18,31 @@ static const unsigned int DEFAULT_SCREENHEIGHT = 768;
 static ClothSimulationSystem clothSystem;
 static Camera camera;
 
+void printVector(std::vector<Vec3f> vec)
+{
+    for(int i = 0; i < vec.size(); i++)
+    {
+        std::cout << "Point " << i << " : " << vec[i] << std::endl;
+    }
+    std::cout << std::endl;
+}
+
 void renderScene() 
 {
     std::vector<Vec3f> pos = clothSystem.getPos();
     std::vector<Constraint> constraints = clothSystem.getConstraints();
+
+    //ground
+    glBegin(GL_QUADS);
+        glColor3d(0.46f,0.77f,0.68f);
+        glVertex3f(-10.0f, 0.0f,-10.0f);
+        glColor3d(0.46f,0.77f,0.68f);
+        glVertex3f(10.0f, 0.0f,-10.0f);
+        glColor3d(0.46f,0.77f,0.68f);
+        glVertex3f(10.0f, 0.0f,10.0f);
+        glColor3d(0.46f,0.77f,0.68f);
+        glVertex3f(-10.0f, 0.0f,10.0f);
+    glEnd();
 
     glBegin(GL_LINES);
         
@@ -33,11 +54,29 @@ void renderScene()
         Vec3f pA = pos[c.idxA];
         Vec3f pB = pos[c.idxB];
 
+        glColor3d(0.85f,0.42,0.44);
         glVertex3f(pA[0], pA[1], pA[2]);
+        glColor3d(0.85f,0.42,0.44);
         glVertex3f(pB[0], pB[1], pB[2]);
     }
 
     glEnd();
+}
+
+void applyCamera() 
+{
+    glLoadIdentity();
+
+    Vec3f camPos = camera.getPos();
+    Vec3f camFront = camera.getFront();
+    Vec3f camUp = camera.getUp();
+
+    std::cout << "pos: " << camPos << std::endl;
+    std::cout << "front: " << camFront << std::endl << std::endl;
+
+    gluLookAt(camPos[0],  camPos[1],  camPos[2],
+                camPos[0] + camFront[0],  camPos[1] + camFront[1],  camPos[2] + camFront[2],
+                camUp[0],  camUp[1],  camUp[2]);
 }
 
 void reshapeEventListener(int w, int h) 
@@ -48,15 +87,7 @@ void reshapeEventListener(int w, int h)
 void display () 
 {
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    Vec3f camPos = camera.getPos();
-    Vec3f camFront = camera.getFront();
-    Vec3f camUp = camera.getUp();
-
-    gluLookAt(camPos[0],  camPos[1],  camPos[2],
-                camPos[0] + camFront[0],  camPos[1] + camFront[1],  camPos[2] + camFront[2],
-                camUp[0],  camUp[1],  camUp[2]);
-
+    applyCamera();
     renderScene ();
     glFlush ();
     glutSwapBuffers (); 
@@ -72,15 +103,6 @@ void motionEventListener (int x, int y)
 {
     camera.handleMouseMoveEvent (x, y);
     display();
-}
-
-void printVector(std::vector<Vec3f> vec)
-{
-    for(int i = 0; i < vec.size(); i++)
-    {
-        std::cout << "Point " << i << " : " << vec[i] << std::endl;
-    }
-    std::cout << std::endl;
 }
 
 void step()
@@ -108,6 +130,7 @@ void keyboardEventListener (unsigned char keyPressed, int x, int y)
             break;
         case 'r':
             camera = Camera();
+            display();
             break;
         default:
             break;
@@ -140,6 +163,8 @@ int main (int argc, char ** argv)
     glutInitWindowSize(DEFAULT_SCREENWIDTH, DEFAULT_SCREENHEIGHT);   // Set the window's initial width & height
     glutInitWindowPosition(50, 50); // Position the window's initial top-left corner
     glutCreateWindow("OpenGL Setup Test"); // Create a window with the given title
+    glClearColor(0.83f, 0.82f, 0.71, 1.0);
+    glLineWidth(5);
     
     camera.resize (DEFAULT_SCREENWIDTH, DEFAULT_SCREENHEIGHT);
 
