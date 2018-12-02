@@ -135,20 +135,10 @@ public:
                                     m_vec[1] * m_vec[1] + 
                                     m_vec[2] * m_vec[2]);
 
-        if(magnitude != 0.0f)
-        {
-            res[0] = m_vec[0] / magnitude;
-            res[1] = m_vec[1] / magnitude;
-            res[2] = m_vec[2] / magnitude;
-            return (res);
-        }
-        else
-        {
-            res[0] = m_vec[0];
-            res[1] = m_vec[1];
-            res[2] = m_vec[2];
-            return (res);
-        }
+        res[0] = m_vec[0] / magnitude;
+        res[1] = m_vec[1] / magnitude;
+        res[2] = m_vec[2] / magnitude;
+        return (res);
     };
 
 private:

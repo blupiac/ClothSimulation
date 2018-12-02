@@ -16,6 +16,7 @@
 const float ROTATE_SENSITIVITY = 0.1f;
 const float MOVE_SPEED = 0.005f;
 const float ZOOM_SPEED = 0.01f;
+const float ZOOM_WHEEL_SPEED = 0.1f;
 
 const float NEAR = 0.01f;
 const float FAR = 50.0f;
@@ -99,6 +100,14 @@ void Camera::handleMouseClickEvent (int button, int state, int x, int y) {
                 rotating = false;
                 zooming = true;
             }
+        }
+        else if(button == 3) // mouse wheel scroll down
+        {
+            cameraPos = cameraPos + cameraFront * ZOOM_WHEEL_SPEED;
+        }
+        else if(button == 4) // mouse wheel scroll down
+        {
+            cameraPos = cameraPos - cameraFront * ZOOM_WHEEL_SPEED;
         }
     }
 }

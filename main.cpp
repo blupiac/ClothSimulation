@@ -71,9 +71,6 @@ void applyCamera()
     Vec3f camFront = camera.getFront();
     Vec3f camUp = camera.getUp();
 
-    std::cout << "pos: " << camPos << std::endl;
-    std::cout << "front: " << camFront << std::endl << std::endl;
-
     gluLookAt(camPos[0],  camPos[1],  camPos[2],
                 camPos[0] + camFront[0],  camPos[1] + camFront[1],  camPos[2] + camFront[2],
                 camUp[0],  camUp[1],  camUp[2]);
@@ -118,7 +115,6 @@ void step()
 
 void keyboardEventListener (unsigned char keyPressed, int x, int y) 
 {
-
     switch (keyPressed) 
     {
         case 'q':
