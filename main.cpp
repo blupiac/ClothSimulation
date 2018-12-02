@@ -15,9 +15,13 @@
 static const unsigned int DEFAULT_SCREENWIDTH = 1024;
 static const unsigned int DEFAULT_SCREENHEIGHT = 768;
 
+static const float STANDARD_TIMESTEP = 0.001f;
+static const float AUTO_UPDATE_FACTOR = 0.0000001f;
+
 static ClothSimulationSystem clothSystem;
 static Camera camera;
 static bool wind = false;
+static bool autoUpdate = false;
 
 
 void printVector(std::vector<Vec3f> vec)
@@ -114,9 +118,8 @@ void motionEventListener (int x, int y)
     display();
 }
 
-void step()
+void step(float deltaTime)
 {
-    float deltaT = 0.001f;
     Vec3f gravity = Vec3f(0.0f, -9.81f, 0.0f);
 
     if(wind)
@@ -125,7 +128,7 @@ void step()
     }
 
     clothSystem.ApplyForce(gravity);
-    clothSystem.TimeStep(deltaT);
+    clothSystem.TimeStep(deltaTime);
 
     display();
 }
@@ -195,6 +198,29 @@ void loadCubeExample()
     clothSystem = ClothSimulationSystem(pos, constraints);
 }
 
+void printUsage()
+{
+    std::cout << "============================================================" << std::endl;
+    std::cout << "===================== CLOTH SIMULATION =====================" << std::endl;
+    std::cout << "============================================================" << std::endl << std::endl;
+
+    std::cout << "Project made by Bernard Lupiac in nov-dec 2018, for the INF1608 project." << std::endl << std::endl;
+
+    std::cout << "Left click + drag to rotate camera." << std::endl;
+    std::cout << "Right click + drag to move in the scene." << std::endl;
+    std::cout << "Mousewheel click + drag, or scrolling to zoom in and out." << std::endl << std::endl;
+
+    std::cout << "Press 'S' to make a timestep in the simulation." << std::endl;
+    std::cout << "Press 'A' to toggle automatic timestep." << std::endl;
+    std::cout << "Press 'R' to reset the camera position and rotation." << std::endl;
+    std::cout << "Press 'W' to toggle wind force on the simulation." << std::endl << std::endl;
+    
+    std::cout << "Press '1' to load the string example." << std::endl;
+    std::cout << "Press '2' to load the cube example." << std::endl << std::endl;
+
+    std::cout << "Press 'Q' or 'Esc' to quit the application." << std::endl;
+}
+
 void keyboardEventListener (unsigned char keyPressed, int x, int y) 
 {
     switch (keyPressed) 
@@ -205,7 +231,19 @@ void keyboardEventListener (unsigned char keyPressed, int x, int y)
             exit (0);
             break;
         case 's':
-            step();
+            step(STANDARD_TIMESTEP);
+            break;
+        case 'a':
+            autoUpdate = !autoUpdate;
+            if(autoUpdate)
+            {
+                std::cout << "Automatic update enabled." << std::endl;
+            }
+            else
+            {
+                std::cout << "Automatic update disabled." << std::endl;
+            }
+            display();
             break;
         case 'r':
             std::cout << "Resetting camera." << std::endl;
@@ -235,13 +273,25 @@ void keyboardEventListener (unsigned char keyPressed, int x, int y)
             display();
             break;
         default:
+            printUsage();
             break;
+    }
+}
+
+void idle()
+{
+    if(autoUpdate)
+    {
+        static float deltaTime = glutGet ((GLenum)GLUT_ELAPSED_TIME);
+        step(deltaTime * AUTO_UPDATE_FACTOR);
     }
 }
 
 int main (int argc, char ** argv) 
 {
     srand ( unsigned ( time (NULL) ) );
+
+    printUsage();
 
     loadStringExample();
 
@@ -255,6 +305,7 @@ int main (int argc, char ** argv)
     
     camera.resize (DEFAULT_SCREENWIDTH, DEFAULT_SCREENHEIGHT);
 
+    glutIdleFunc (idle);
     glutKeyboardFunc (keyboardEventListener);
     glutReshapeFunc (reshapeEventListener);
     glutMotionFunc (motionEventListener);
