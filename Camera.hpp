@@ -1,12 +1,12 @@
-#pragma once
-
-#include "Vec3.hpp"
 //-----------------------------------------------------------------------------
 // Author: Bernard Lupiac
 // Created: 01/12/2018
 // Based on: https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
 //-----------------------------------------------------------------------------
 
+#pragma once
+
+#include "Vec3.hpp"
 
 class Camera {
 public:

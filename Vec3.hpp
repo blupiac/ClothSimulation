@@ -110,7 +110,7 @@ public:
         return (res);
     };
 
-    inline const float dot (const Vec3 & p) const
+    inline float dot (const Vec3 & p) const
     {
         float res = 0.0f;
         res += m_vec[0] * p[0];

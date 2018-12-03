@@ -4,11 +4,8 @@
 // Based on: https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/7.3.camera_mouse_zoom/camera_mouse_zoom.cpp
 //-----------------------------------------------------------------------------
 
-#include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/glu.h>
-#include <iostream>
-#include <string>
 #include <math.h>
 
 #include "Camera.hpp"

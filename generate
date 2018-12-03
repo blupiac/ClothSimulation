@@ -1,1 +1,1 @@
-g++ main.cpp ClothSimulationSystem.cpp Camera.cpp -lm -lglut -lGLU -lGL -O3 -o clothSimulation
+g++ main.cpp ClothSimulationSystem.cpp Camera.cpp -lm -lglut -lGLU -lGL -O3 -Wall -Wextra -Wfloat-equal -o clothSimulation

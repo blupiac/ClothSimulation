@@ -1,15 +1,13 @@
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 // Author: Bernard Lupiac
 // Created: 15/11/2018
 // Based on: https://www.gamasutra.com/view/feature/131313/advanced_character_physics.php
 // and class notes
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------
 
 #include <math.h>
-#include <iostream>
 
 #include "ClothSimulationSystem.hpp"
-#include "Vec3.hpp"
 #include "Camera.hpp"
 
 static const float particleMass = 1.0f;
@@ -34,7 +32,7 @@ ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
     m_oldPos.resize(numParticles);
     m_forces.resize(numParticles);
 
-    for(int i = 0; i < m_currPos.size(); i++)
+    for(unsigned int i = 0; i < m_currPos.size(); i++)
     {
         m_oldPos[i] = m_currPos[i];
         m_forces[i] = Vec3f(0.0f, 0.0f, 0.0f);
@@ -53,7 +51,7 @@ std::vector<Constraint> ClothSimulationSystem::getConstraints()
 
 void ClothSimulationSystem::AccumulateForces(float stepSize)
 {
-    for(int i = 0; i < m_currPos.size(); i++)
+    for(unsigned int i = 0; i < m_currPos.size(); i++)
     {
     	if(m_isMovable[i])
     	{
@@ -65,7 +63,7 @@ void ClothSimulationSystem::AccumulateForces(float stepSize)
 
 void ClothSimulationSystem::Verlet(float stepSize) 
 {
-    for(int i = 0; i < m_currPos.size(); i++)
+    for(unsigned int i = 0; i < m_currPos.size(); i++)
     {
     	if(m_isMovable[i])
     	{
@@ -80,7 +78,7 @@ void ClothSimulationSystem::Verlet(float stepSize)
 
 void ClothSimulationSystem::SatisfyConstraints()
 {
-    for(int i = 0; i < numRelaxIter; i++)
+    for(unsigned int i = 0; i < numRelaxIter; i++)
     {
         // makes sure constraints specified during creation are respected
         for(std::vector<Constraint>::iterator it = m_constraints.begin();
@@ -111,7 +109,7 @@ void ClothSimulationSystem::SatisfyConstraints()
         }
 
         // makes sure y coordinate can't be negative
-        for(int i = 0; i < m_currPos.size(); i++)
+        for(unsigned int i = 0; i < m_currPos.size(); i++)
         {
             m_currPos[i][1] = std::max(0.0f, m_currPos[i][1]);
         }
@@ -120,7 +118,7 @@ void ClothSimulationSystem::SatisfyConstraints()
 
 void ClothSimulationSystem::ApplyForce(Vec3f forceDirection)
 {
-    for(int i = 0; i < m_forces.size(); i++)
+    for(unsigned int i = 0; i < m_forces.size(); i++)
     {
         m_forces[i] = m_forces[i] + forceDirection;
     }

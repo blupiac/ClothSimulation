@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 
 #include <iostream>
-#include <time.h>
 #include <GL/glut.h>
 
 #include "ClothSimulationSystem.hpp"
@@ -26,7 +25,7 @@ static bool autoUpdate = false;
 
 void printVector(std::vector<Vec3f> vec)
 {
-    for(int i = 0; i < vec.size(); i++)
+    for(unsigned int i = 0; i < vec.size(); i++)
     {
         std::cout << "Point " << i << " : " << vec[i] << std::endl;
     }
@@ -1492,6 +1491,9 @@ void printUsage()
 
 void keyboardEventListener (unsigned char keyPressed, int x, int y) 
 {
+    // avoids unused warning
+    (void) x; (void) y;
+
     switch (keyPressed) 
     {
         case 'q':
