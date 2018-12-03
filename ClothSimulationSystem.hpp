@@ -24,7 +24,7 @@ public:
     
     ClothSimulationSystem(std::vector<Vec3f>& pos,
                             std::vector<Constraint>& constraints,
-                            std::vector<bool> isMovable);
+                            std::vector<bool>& isMovable);
     std::vector<Vec3f> getPos();
     std::vector<Constraint> getConstraints();
 

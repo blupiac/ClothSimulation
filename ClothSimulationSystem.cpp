@@ -21,7 +21,7 @@ ClothSimulationSystem::ClothSimulationSystem()
 
 ClothSimulationSystem::ClothSimulationSystem(std::vector<Vec3f>& pos,
                             std::vector<Constraint>& constraints,
-                            std::vector<bool> isMovable)
+                            std::vector<bool>& isMovable)
 {
     int numParticles = pos.size();
 
