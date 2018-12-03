@@ -14,6 +14,8 @@
 
 static const float particleMass = 1.0f;
 
+static const int numRelaxIter = 1;
+
 ClothSimulationSystem::ClothSimulationSystem()
 {
 
@@ -78,9 +80,7 @@ void ClothSimulationSystem::Verlet(float stepSize)
 
 void ClothSimulationSystem::SatisfyConstraints()
 {
-    int numIter = 5;
-
-    for(int i = 0; i < numIter; i++)
+    for(int i = 0; i < numRelaxIter; i++)
     {
         // makes sure constraints specified during creation are respected
         for(std::vector<Constraint>::iterator it = m_constraints.begin();
