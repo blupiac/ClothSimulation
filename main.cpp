@@ -15,7 +15,7 @@ static const unsigned int DEFAULT_SCREENWIDTH = 1024;
 static const unsigned int DEFAULT_SCREENHEIGHT = 768;
 
 static const float STANDARD_TIMESTEP = 0.001f;
-static const float AUTO_UPDATE_FACTOR = 0.0000001f;
+static const float AUTO_UPDATE_FACTOR = 1.0e-7f;
 
 static ClothSimulationSystem clothSystem;
 static Camera camera;

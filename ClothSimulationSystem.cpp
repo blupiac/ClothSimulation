@@ -12,7 +12,7 @@
 
 static const float particleMass = 1.0f;
 
-static const int numRelaxIter = 1;
+static const int numRelaxIter = 5;
 
 ClothSimulationSystem::ClothSimulationSystem()
 {
